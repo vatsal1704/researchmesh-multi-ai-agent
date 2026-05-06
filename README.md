@@ -32,45 +32,8 @@ The system simulates a distributed AI research workflow where each autonomous ag
 
 ResearchMind follows a distributed agent workflow:
 
-```text
-User Research Query
-        │
-        ▼
-┌──────────────────────┐
-│   Search Agent       │
-│  (Web Search Tool)   │
-└──────────────────────┘
-        │
-        ▼
- Real-time Web Results
-        │
-        ▼
-┌──────────────────────┐
-│    Reader Agent      │
-│ (URL Scraper Tool)   │
-└──────────────────────┘
-        │
-        ▼
- Extracted Content
-        │
-        ▼
-┌──────────────────────┐
-│    Writer Chain      │
-│  Research Synthesis  │
-└──────────────────────┘
-        │
-        ▼
- Draft Research Report
-        │
-        ▼
-┌──────────────────────┐
-│    Critic Chain      │
-│ Quality Evaluation   │
-└──────────────────────┘
-        │
-        ▼
- Final Research Report
-```
+<img width="1536" height="1024" alt="ChatGPT Image May 6, 2026, 02_44_12 PM" src="https://github.com/user-attachments/assets/43983241-4c01-42b4-894c-44d0071ce513" />
+
 
 ---
 
