@@ -1,4 +1,5 @@
-from langchain.agents import create_agent
+from langgraph.prebuilt import create_react_agent
+#from langchain.agents import create_agent
 #from langchain_openai import ChatOpenAI
 #from langchain.agents import initialize_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -10,7 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 #model setup 
-llm = llm = ChatGoogleGenerativeAI(
+llm = ChatGoogleGenerativeAI(
     model="gemini-2.0-flash",
     temperature=0.3
 )
@@ -18,10 +19,7 @@ llm = llm = ChatGoogleGenerativeAI(
 
 #1st agent 
 def build_search_agent():
-    return create_agent(
-        model = llm,
-        tools= [web_search]
-    )
+    return create_react_agent(llm, [web_search])
 
 #2nd agent 
 
