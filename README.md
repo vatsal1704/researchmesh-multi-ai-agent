@@ -29,7 +29,7 @@ The system simulates a distributed AI research workflow where each autonomous ag
 ---
 ## 🚀 Live Demo
 
-[![Live Demo](https://multi-ai-agent-fpckoqokwamnby2hmgoaon.streamlit.app/)
+[[Live Demo](https://multi-ai-agent-fpckoqokwamnby2hmgoaon.streamlit.app/)
 
 
 # Architecture Overview
