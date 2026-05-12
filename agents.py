@@ -9,14 +9,14 @@ load_dotenv()
 
 # Main LLM - used for writer and critic (needs more tokens)
 llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",
+    model="gemini-2.5-flash-lite",
     temperature=0.3,
     max_output_tokens=800  # cap output to save tokens
 )
 
 # Lightweight LLM - used for agents (tool calling only, needs less)
 llm_agent = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",
+    model="gemini-2.5-flash-lite",
     temperature=0,
     max_output_tokens=300  # agents just need to call tools, not write essays
 )
