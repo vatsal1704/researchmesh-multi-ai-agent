@@ -27,6 +27,10 @@ The system simulates a distributed AI research workflow where each autonomous ag
 - Production-ready deployment workflow
 
 ---
+## 🚀 Live Demo
+
+[![Live Demo](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://multi-ai-agent-fpckoqokwamnby2hmgoaon.streamlit.app/)
+
 
 # Architecture Overview
 
