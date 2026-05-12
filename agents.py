@@ -1,5 +1,5 @@
 from langgraph.prebuilt import create_react_agent
-from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from tools import web_search, scrape_url
@@ -7,10 +7,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-llm = ChatGroq(
-    model="llama-3.3-70b-versatile",  # good at tool calling
-    temperature=0.3,
-    max_tokens=500  # limit output tokens to stay within quota
+llm = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash",
+    temperature=0.3
 )
 
 def build_search_agent():
@@ -22,21 +21,36 @@ def build_reader_agent():
 writer_prompt = ChatPromptTemplate.from_messages([
     ("system", "You are an expert research writer. Write clear, structured and insightful reports."),
     ("human", """Write a detailed research report on the topic below.
+
 Topic: {topic}
+
 Research Gathered:
 {research}
-Structure: Introduction, Key Findings, Conclusion, Sources."""),
+
+Structure the report as:
+- Introduction
+- Key Findings (minimum 3 well-explained points)
+- Conclusion
+- Sources (list all URLs found in the research)
+
+Be detailed, factual and professional."""),
 ])
 writer_chain = writer_prompt | llm | StrOutputParser()
 
 critic_prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a sharp and constructive research critic."),
     ("human", """Review this report and respond in this exact format:
+
 Score: X/10
+
 Strengths:
 - ...
+- ...
+
 Areas to Improve:
 - ...
+- ...
+
 One line verdict: ...
 
 Report:
