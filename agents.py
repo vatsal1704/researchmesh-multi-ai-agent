@@ -7,51 +7,49 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Main LLM - used for writer and critic (needs more tokens)
 llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-flash",
-    temperature=0.3
+    temperature=0.3,
+    max_output_tokens=800  # cap output to save tokens
+)
+
+# Lightweight LLM - used for agents (tool calling only, needs less)
+llm_agent = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash",
+    temperature=0,
+    max_output_tokens=300  # agents just need to call tools, not write essays
 )
 
 def build_search_agent():
-    return create_react_agent(llm, [web_search])
+    return create_react_agent(llm_agent, [web_search])
 
 def build_reader_agent():
-    return create_react_agent(llm, [scrape_url])
+    return create_react_agent(llm_agent, [scrape_url])
 
 writer_prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are an expert research writer. Write clear, structured and insightful reports."),
-    ("human", """Write a detailed research report on the topic below.
+    ("system", "You are a concise research writer. Write structured, factual reports."),
+    ("human", """Write a research report on: {topic}
 
-Topic: {topic}
-
-Research Gathered:
+Research:
 {research}
 
-Structure the report as:
-- Introduction
-- Key Findings (minimum 3 well-explained points)
-- Conclusion
-- Sources (list all URLs found in the research)
-
-Be detailed, factual and professional."""),
+Format:
+## Introduction
+## Key Findings (3 points)
+## Conclusion
+## Sources"""),
 ])
 writer_chain = writer_prompt | llm | StrOutputParser()
 
 critic_prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a sharp and constructive research critic."),
-    ("human", """Review this report and respond in this exact format:
+    ("system", "You are a research critic. Be brief and specific."),
+    ("human", """Review this report briefly.
 
 Score: X/10
-
-Strengths:
-- ...
-- ...
-
-Areas to Improve:
-- ...
-- ...
-
-One line verdict: ...
+Strengths: (2 points)
+Areas to Improve: (2 points)
+Verdict: (1 line)
 
 Report:
 {report}"""),
