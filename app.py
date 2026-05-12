@@ -723,15 +723,16 @@ if st.session_state.running and not st.session_state.done:
             results["search"] = sr["messages"][-1].content
             st.session_state.results = dict(results)
 
+        # ── Step 2: Reader — find this block and replace it ──
         with st.spinner("📄 Reader Agent is scraping top resources…"):
             reader_agent = build_reader_agent()
             rr = reader_agent.invoke({
                 "messages": [("user",
-                    f"Based on these search results about '{topic_val}', "
-                    f"pick the most relevant URL and scrape it.\n\n{results['search'][:800]}"
+                    f"From these search results about '{topic_val}', "
+                    f"pick ONE URL and scrape it.\n\n{results['search'][:300]}"  # only 300 chars
                 )]
             })
-            results["reader"] = rr["messages"][-1].content
+            results["reader"] = rr["messages"][-1].content[:1000]  # cap reader output too
             st.session_state.results = dict(results)
 
         with st.spinner("✍️ Writer is drafting the report…"):
