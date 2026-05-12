@@ -8,8 +8,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 llm = ChatGroq(
-    model="llama-3.1-8b-instant",
-    temperature=0.3
+    model="llama-3.3-70b-versatile",  # good at tool calling
+    temperature=0.3,
+    max_tokens=500  # limit output tokens to stay within quota
 )
 
 def build_search_agent():
