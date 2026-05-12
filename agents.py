@@ -25,10 +25,7 @@ def build_search_agent():
 #2nd agent 
 
 def build_reader_agent():
-    return create_agent(
-        model = llm,
-        tools = [scrape_url]
-    )
+    return create_react_agent(llm, [scrape_url]) 
 
 
 #writer chain 
